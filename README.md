@@ -2,13 +2,14 @@
 
 ### Starting
 
-* First install the dependencies. 
+* Make sure you have mongodb installed on your system. `apt-get install mongodb`
+* Then install the application dependencies. 
 
 ```
 npm install
 ```
 
-* Then start the server.
+* Finally, start the server.
 
 ```
 npm start
