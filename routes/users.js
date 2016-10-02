@@ -38,5 +38,20 @@ router.post('/', function (req, res, next) {
   })
 })
 
+/*
+ * GET single user
+ */
+router.get('/:id', function (req, res, next) {
+  User.findById(req.params.id, function (err, user) {
+    if (err) {
+      return next(err)
+    }
+    res.json(user)
+  })
+})
 
+// TODO: Implement Delete API
+// May require deleting highlights to be done manually
+
+// Export the Router
 module.exports = router
