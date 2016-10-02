@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
-var crypto = require('crypto')
+
+var helpers = require('./lib/helpers.js')
 
 var User = require('../models/User.js')
 
@@ -26,9 +27,7 @@ router.post('/', function (req, res, next) {
     user.username = user.email
   }
   // set hash password
-  var hashPassword = crypto.createHash('sha1')
-  hashPassword.update(user.password)
-  user.password = hashPassword.digest('hex')
+  user.password = helpers.hashPassword(user.password)
   // save user
   user.save(function (err) {
     if (err) {
@@ -47,6 +46,30 @@ router.get('/:id', function (req, res, next) {
       return next(err)
     }
     res.json(user)
+  })
+})
+
+/*
+ * UPDATE single user
+ */
+router.put('/:id', function (req, res, next) {
+  User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+    if (err) {
+      return next(err)
+    }
+    // update password hash
+    User.findById(req.params.id, function (err, user) {
+      if (err) {
+        return next(err)
+      }
+      user.password = helpers.hashPassword(user.password)
+      user.save(function (err) {
+        if (err) {
+          return next(err)
+        }
+        res.json(user)
+      })
+    })
   })
 })
 
