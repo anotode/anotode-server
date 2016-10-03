@@ -7,15 +7,15 @@ var User = require('../models/User.js')
 var chai = require('chai')
 var chaiHttp = require('chai-http')
 var server = require('../app.js')
-var should = chai.should()
 
+chai.should()
 chai.use(chaiHttp)
 
 // Test
 describe('User API', () => {
   // cleaner
   beforeEach((done) => {
-    User.remove({}, (err) => {
+    User.remove({}, (er) => {
       done()
     })
   })
@@ -29,7 +29,7 @@ describe('User API', () => {
       chai.request(server)
         .post('/api/users')
         .send(user)
-        .end((err, res) => {
+        .end((er, res) => {
           res.should.have.status(200)
           res.body.should.be.an('object')
           res.body.should.have.property('username')
