@@ -1,5 +1,6 @@
 ### Imports data from the user  
-`var mongoose = require('mongoose')
+```
+var mongoose = require('mongoose')
 
 // column values should not be repeated. So normalization is to done.
 var Highlight = new mongoose.Schema({
@@ -13,19 +14,24 @@ var Highlight = new mongoose.Schema({
   // hash :
   comment : String
   
-})`
+})
+```
 
 
 
-`var Tags = new mongoose.Schema({
+```
+var Tags = new mongoose.Schema({
 	tag_id : {type: Integer, unique:true}
 	name : {type: String, unique:true}
 	text_id : {type: Integer, unique:true}  // foreign key.ß
-})`
-
-
+})
 
 module.exports = mongoose.model('User', Highlight)
+
+```
+
+
+
 
 
 // NOTE: Its not wise to change the Schema. So once this is verified fixed, There is no changing without any strong reason.
