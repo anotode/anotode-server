@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "standard"
+  },
+  "devDependencies": {
+    "standard": "*"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -13,6 +17,7 @@
     "pug": "2.0.0-beta6",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
-    "mongoose": "~4.6.2"
+    "mongoose": "~4.6.2",
+    "jsonwebtoken": "~7.1.9"
   }
 }
