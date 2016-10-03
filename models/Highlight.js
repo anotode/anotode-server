@@ -1,19 +1,15 @@
-// Imports data from the user
 var mongoose = require('mongoose')
 
-var Highlight = new mongoose.Schema({
+var HighlightSchema = new mongoose.Schema({
   user_id: { type: String, unique: true },
   title: String,
   text: String,
   url: String,
-  timeDate: Number,
+  category: String,
   color: Number,
+  timeDate: Number,
   comment: String,
-  tags: [ tag ]
+  tags: [ String ]
 })
 
-var tag = new mongoose.Schema({
-  name: {type: String, unique: true}
-})
-
-module.exports = mongoose.model('User', Highlight)
+module.exports = mongoose.model('Highlight', HighlightSchema)
