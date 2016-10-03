@@ -13,8 +13,11 @@ var login = require('./routes/login')
 var app = express()
 
 // connect to database
+var dbUrl = process.env.DATABASE_URL
+  ? process.env.DATABASE_URL
+  : 'mongodb://localhost:27017/anotode'
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost:27017/anotode')
+mongoose.connect(dbUrl)
   .then(() => console.log('Connection successful'))
   .catch((err) => console.log(err))
 
