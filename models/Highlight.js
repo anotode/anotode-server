@@ -7,7 +7,7 @@ var HighlightSchema = new mongoose.Schema({
   url: String,
   category: String,
   color: String,
-  timeDate: Number,
+  time: { type: Date, default: Date.now },
   comment: String,
   tags: [ String ]
 })
