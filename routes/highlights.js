@@ -1,7 +1,6 @@
 var express = require('express')
 var router = express.Router()
 
-var helpers = require('./lib/helpers.js')
 var auth = require('./lib/auth.js')
 
 var Highlight = require('../models/Highlight.js')
@@ -78,7 +77,6 @@ router.put('/:hid', function (req, res, next) {
     res.status(400).json({ error: err })
   })
 })
-
 
 // Export the Router
 module.exports = router
