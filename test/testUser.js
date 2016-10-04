@@ -1,12 +1,10 @@
-// set test database
-process.env.DATABASE_URL = 'mongodb://localhost:27017/anotode_test'
-
 var User = require('../models/User.js')
 
 // require dependencies
 var chai = require('chai')
 var chaiHttp = require('chai-http')
 var server = require('../app.js')
+var helpers = require('./lib/test_helpers.js')
 
 chai.should()
 chai.use(chaiHttp)
@@ -38,6 +36,23 @@ describe('User API', () => {
           // done
           done()
         })
+    })
+  })
+  // test GET list
+  describe('/GET list user', () => {
+    it('it should list all users', (done) => {
+      helpers.createUser(chai, server).then((res) => {
+        var userId = res.body._id
+        chai.request(server)
+          .get('/api/users')
+          .end((er, res) => {
+            res.should.have.status(200)
+            res.body[0]._id.should.equal(userId)
+            done()
+          })
+      }, (err) => {
+        done(err)
+      })
     })
   })
 })

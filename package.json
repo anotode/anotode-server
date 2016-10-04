@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "standard",
-    "unittest": "./node_modules/mocha/bin/mocha --timeout 10000"
+    "unittest": "export DATABASE_URL=\"mongodb://localhost:27017/anotode_test\" && ./node_modules/mocha/bin/mocha --timeout 10000"
   },
   "devDependencies": {
     "standard": "*",
