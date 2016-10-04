@@ -1,5 +1,7 @@
 # Anotode Server
 
+[![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 ### Starting
 
 * Make sure you have mongodb installed on your system. `apt-get install mongodb`
