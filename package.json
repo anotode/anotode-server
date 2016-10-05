@@ -26,5 +26,8 @@
   },
   "standard": {
     "env": [ "mocha" ]
+  },
+  "engines": {
+    "node": "4.6.0"
   }
 }
