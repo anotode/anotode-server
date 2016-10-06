@@ -9,12 +9,16 @@ var bodyParser = require('body-parser')
 var routes = require('./routes/index')
 var users = require('./routes/users')
 var login = require('./routes/login')
+var highlights = require('./routes/highlights')
 
 var app = express()
 
 // connect to database
+var dbUrl = process.env.DATABASE_URL
+  ? process.env.DATABASE_URL
+  : 'mongodb://localhost:27017/anotode'
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost:27017/anotode')
+mongoose.connect(dbUrl)
   .then(() => console.log('Connection successful'))
   .catch((err) => console.log(err))
 
@@ -34,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', routes)
 app.use('/api/users', users)
 app.use('/api/login', login)
+app.use('/api/highlights', highlights)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

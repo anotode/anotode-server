@@ -7,3 +7,11 @@ http post localhost:3000/api/users email=asd password=sads -j
 
 # Login
 http post localhost:3000/api/login email=asd password=sads -j
+
+# Get higlight
+http get "localhost:3000/api/highlights?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1N2YxMWNlNDk1NDcxMDNkNDg5OTExYmIiLCJpYXQiOjE0NzU2MDI4MjF9.uk14DwEAwzbhckq48SP-b5ZtBIAmik079fgtsssQPzo"
+
+# post highlight
+http post "localhost:3000/api/highlights?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1N2YxMWNlNDk1NDcxMDNkNDg5OTExYmIiLCJpYXQiOjE0NzU2MDI4MjF9.uk14DwEAwzbhckq48SP-b5ZtBIAmik079fgtsssQPzo" text=abc title=def -j
+
+http put "localhost:3000/api/highlights/57f3ea3f1e44661890c773c5?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1N2YxMWNlNDk1NDcxMDNkNDg5OTExYmIiLCJpYXQiOjE0NzU2MDI4MjF9.uk14DwEAwzbhckq48SP-b5ZtBIAmik079fgtsssQPzo" text=abc title=def category=mycat -j

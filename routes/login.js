@@ -23,7 +23,7 @@ router.post('/', function (req, res, next) {
     }
     // return user token
     var user = users[0]
-    var jwtToken = jwt.sign({ _id: user._id }, 'SECRET', {}, function (err, token) {
+    jwt.sign({ _id: user._id }, 'SECRET', {}, function (err, jwtToken) {
       if (err) {
         return next(err)
       }
