@@ -46,3 +46,7 @@ and body with your **text** and **title** and **tags** as parametres.
 send a `GET` request to `http://anotode.herokuapp.com/api/highlights?token=<yourtoken>`  
 
 ![alt tag](https://cloud.githubusercontent.com/assets/9148277/19167793/d5538a30-8c2a-11e6-8fc7-a6fe0c1e3128.gif)
+
+<br><br>
+
+[Here](https://drive.google.com/open?id=0B92d-PQYTSLwV2xscFc1YmUzWjQ) is the collection of requests to test the API. You can import them directly to Postman and start testing.  
