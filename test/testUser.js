@@ -55,4 +55,32 @@ describe('User API', () => {
       })
     })
   })
+  // test GET single user
+  describe('/GET single user', () => {
+    it('it should display details of single user', (done) => {
+      // create user
+      helpers.createUser(chai, server).then((res) => {
+        var user = {
+          email: res.body.email,
+          password: 'password'
+        }
+        // login
+        helpers.loginUser(chai, server, user).then((token) => {
+          // get details
+          chai.request(server)
+            .get('/api/users/user?token=' + token)
+            .end((er, res) => {
+              res.should.have.status(200)
+              res.body.email.should.equal('aviaryan@git.com')
+              res.body.username.should.equal('aviaryan@git.com')
+              done()
+            })
+        }, (err) => {
+          done(err)
+        })
+      }, (err) => {
+        done(err)
+      })
+    })
+  })
 })

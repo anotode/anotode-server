@@ -17,3 +17,19 @@ exports.createUser = function (chai, server) {
       })
   })
 }
+
+// login user
+exports.loginUser = function (chai, server, user) {
+  return new Promise(function (resolve, reject) {
+    chai.request(server)
+      .post('/api/login')
+      .send(user)
+      .end((err, res) => {
+        if (err) {
+          reject(res)
+        } else {
+          resolve(res.body.token)
+        }
+      })
+  })
+}
