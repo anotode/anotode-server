@@ -4,28 +4,18 @@
  */
 var crypto = require('crypto')
 
-var self = this
-
-/*
- * Send error response
- */
-self.errorResponse = function (text, code) {
-  code = typeof code !== 'undefined' ? code : 400
-
-  return {
-    message: text,
-    code: code
-  }
-}
-
 /*
  * Hash password
  */
-self.hashPassword = function (password) {
+exports.hashPassword = function (password) {
   var hashPassword = crypto.createHash('sha1')
   hashPassword.update(password)
   return hashPassword.digest('hex')
 }
 
-// Export everything
-module.exports = self
+/*
+ * Return error response
+ */
+exports.makeError = function (res, error) {
+  return res.status(400).json({ error: error })
+}

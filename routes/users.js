@@ -3,6 +3,7 @@ var router = express.Router()
 
 var auth = require('./lib/auth.js')
 var helpers = require('./lib/helpers.js')
+var error = helpers.makeError
 
 var User = require('../models/User.js')
 
@@ -12,7 +13,7 @@ var User = require('../models/User.js')
 router.get('/', function (req, res, next) {
   User.find(function (err, users) {
     if (err) {
-      return next(err)
+      return error(res, err)
     }
     res.json(users)
   })
@@ -32,7 +33,7 @@ router.post('/', function (req, res, next) {
   // save user
   user.save(function (err) {
     if (err) {
-      return next(err)
+      return error(res, err)
     }
     res.json(user)
   })
@@ -45,12 +46,12 @@ router.get('/user', function (req, res, next) {
   auth.verifyJWT(req.query.token).then((id) => {
     User.findById(id, function (err, user) {
       if (err) {
-        return next(err)
+        return error(res, err)
       }
       res.json(user)
     })
   }, (err) => {
-    res.status(400).json({ error: err })
+    error(res, err)
   })
 })
 
@@ -61,24 +62,24 @@ router.put('/user', function (req, res, next) {
   auth.verifyJWT(req.query.token).then((id) => {
     User.findByIdAndUpdate(id, req.body, function (err, post) {
       if (err) {
-        return next(err)
+        return error(res, err)
       }
       // update password hash
       User.findById(id, function (err, user) {
         if (err) {
-          return next(err)
+          return error(res, err)
         }
         user.password = helpers.hashPassword(user.password)
         user.save(function (err) {
           if (err) {
-            return next(err)
+            return error(res, err)
           }
           res.json(user)
         })
       })
     })
   }, (err) => {
-    res.status(400).json({ error: err })
+    error(res, err)
   })
 })
 
