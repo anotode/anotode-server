@@ -1,7 +1,7 @@
 language: node_js
 services:
   - mongodb
-node_js: '4'
+node_js: '6'
 before_script: npm install -g standard
 script:
   - npm run-script unittest

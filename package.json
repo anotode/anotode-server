@@ -28,6 +28,6 @@
     "env": [ "mocha" ]
   },
   "engines": {
-    "node": "4.6.0"
+    "node": "6.9.1"
   }
 }
