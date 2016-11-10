@@ -60,12 +60,8 @@ describe('User API', () => {
     it('it should display details of single user', (done) => {
       // create user
       helpers.createUser(chai, server).then((res) => {
-        var user = {
-          email: res.body.email,
-          password: 'password'
-        }
         // login
-        helpers.loginUser(chai, server, user).then((token) => {
+        helpers.loginUser(chai, server).then((token) => {
           // get details
           chai.request(server)
             .get('/api/users/user?token=' + token)

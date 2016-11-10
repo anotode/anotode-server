@@ -11,7 +11,16 @@ var Highlight = require('../models/Highlight.js')
  */
 router.get('/', function (req, res, next) {
   auth.verifyJWT(req.query.token).then((id) => {
-    Highlight.find({ user_id: id }, (err, hls) => {
+    // make filter
+    var filter = {user_id: id}
+    if (req.query.url_eq) {
+      filter['url'] = req.query.url_eq
+    }
+    if (req.query.text_contains) {
+      filter['text'] = {'$regex': req.query.text_contains, '$options': 'i'}
+    }
+    // find
+    Highlight.find(filter, (err, hls) => {
       if (err) {
         return error(res, err)
       }
