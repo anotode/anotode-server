@@ -104,5 +104,22 @@ router.put('/:hid', function (req, res, next) {
   })
 })
 
+/*
+ * GET list of categories
+ */
+router.get('/categories', function (req, res, next) {
+  auth.verifyJWT(req.query.token).then((id) => {
+    // make filter
+    Highlight.distinct('category', {user_id: id}, (err, ids) => {
+      if (err) {
+        error(res, err)
+      }
+      res.json(ids)
+    })
+  }, (err) => {
+    error(res, err)
+  })
+})
+
 // Export the Router
 module.exports = router

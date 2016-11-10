@@ -20,3 +20,4 @@ http put "localhost:3000/api/highlights/57f3ea3f1e44661890c773c5?token=eyJhbGciO
 http get http://anotode.herokuapp.com/api/highlights?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1N2Y1MDRkNTk5M2NiODAwMTI3ZDRjZjgiLCJpYXQiOjE0NzYzNDkwNjB9.OXXKmiiNKw3jQ8fn3GAAW6umpk0KCZbrzKiR6wtnKB8
 
 
+http get "localhost:3000/api/highlights/categories?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1N2YxMWNlNDk1NDcxMDNkNDg5OTExYmIiLCJpYXQiOjE0Nzg3NzgwMTV9.fbmJ3BJFfAZ1Z41EzaZGFRohfBpp0KmaCaLtPpuCNRw"
