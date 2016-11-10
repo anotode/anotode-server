@@ -11,6 +11,21 @@ var tokenGlobal
 chai.should()
 chai.use(chaiHttp)
 
+// Helpers
+var getHighlights = function (more) {
+  return new Promise(function (resolve, reject) {
+    chai.request(server)
+      .get('/api/highlights?token=' + tokenGlobal + '&' + more)
+      .end((err, res) => {
+        if (err) {
+          reject(res)
+        } else {
+          resolve(res)
+        }
+      })
+  })
+}
+
 // Test
 describe('Highlight API', () => {
   // cleaner, also creates user and sets token
@@ -56,7 +71,7 @@ describe('Highlight API', () => {
       text: 'Some text that will be stored',
       url: 'http://google.com',
       title: 'Lorem Death',
-      tags: ['google', 'testcase'],
+      tags: ['google', 'testcase', 'nene'],
       category: 'unittest',
       comment: 'mah comment'
     }
@@ -77,13 +92,11 @@ describe('Highlight API', () => {
     // test search 0 results
     it('it should search in highlights with 0 results', (done) => {
       helpers.createHl(chai, server, tokenGlobal, highlight).then((res) => {
-        chai.request(server)
-          .get('/api/highlights?token=' + tokenGlobal + '&text_contains=blahblah')
-          .end((er, res) => {
-            res.should.have.status(200)
-            res.body.length.should.equal(0)
-            done()
-          })
+        getHighlights('contains=blahblah').then((res) => {
+          res.should.have.status(200)
+          res.body.length.should.equal(0)
+          done()
+        })
       }, (err) => {
         done(err)
       })
@@ -91,13 +104,21 @@ describe('Highlight API', () => {
     // test search positive result
     it('it should do a positive search', (done) => {
       helpers.createHl(chai, server, tokenGlobal, highlight).then((res) => {
-        chai.request(server)
-          .get('/api/highlights?token=' + tokenGlobal + '&text_contains=store')
-          .end((er, res) => {
-            res.should.have.status(200)
-            res.body[0].text.should.equal(highlight.text)
-            done()
-          })
+        getHighlights('contains=store').then((res) => {
+          res.body[0].text.should.equal(highlight.text)
+          done()
+        })
+      }, (err) => {
+        done(err)
+      })
+    })
+    // test search positive result with tag search
+    it('it should do a positive search using tags', (done) => {
+      helpers.createHl(chai, server, tokenGlobal, highlight).then((res) => {
+        getHighlights('contains=nene').then((res) => {
+          res.body[0].text.should.equal(highlight.text)
+          done()
+        })
       }, (err) => {
         done(err)
       })

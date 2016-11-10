@@ -17,8 +17,24 @@ router.get('/', function (req, res, next) {
       filter['url'] = req.query.url_eq
     }
     if (req.query.text_contains) {
-      filter['text'] = {'$regex': req.query.text_contains, '$options': 'i'}
+      filter['text'] = new RegExp(req.query.text_contains, 'i')
     }
+    if (req.query.url_contains) {
+      filter['url'] = new RegExp(req.query.url_contains, 'i')
+    }
+    if (req.query.contains) {
+      // http://stackoverflow.com/questions/7382207/mongooses-find-method-with-or
+      filter['$or'] = []
+      var arr = ['text', 'title', 'comment', 'category', 'url', 'tags']
+      // will work for tags array as tags is array of strings
+      // http://stackoverflow.com/questions/18148166/
+      for (var i = 0; i < arr.length; i++) {
+        var obj = {}
+        obj[arr[i]] = new RegExp(req.query.contains, 'i')
+        filter['$or'].push(obj)
+      }
+    }
+    console.log(filter)
     // find
     Highlight.find(filter, (err, hls) => {
       if (err) {
