@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+var fs = require('fs')
 
 var auth = require('./lib/auth.js')
 var error = require('./lib/helpers.js').makeError
@@ -132,6 +133,28 @@ router.get('/urls', function (req, res, next) {
         error(res, err)
       }
       res.json(ids)
+    })
+  }, (err) => {
+    error(res, err)
+  })
+})
+
+/*
+ * Export everything in JSON
+ */
+router.get('/export', function (req, res, next) {
+  auth.verifyJWT(req.query.token).then((id) => {
+    Highlight.find({user_id: id}, (err, hls) => {
+      if (err) {
+        error(res, err)
+      }
+      var filename = __dirname + '/../static/userdata_' + id + '.json' // eslint-disable-line
+      fs.writeFile(filename, JSON.stringify(hls), (err) => {
+        if (err) {
+          error(res, err)
+        }
+        res.download(filename)
+      })
     })
   }, (err) => {
     error(res, err)
