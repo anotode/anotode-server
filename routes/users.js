@@ -93,6 +93,29 @@ router.put('/user', function (req, res, next) {
   })
 })
 
+/*
+ * Reset password (set new password)
+ */
+router.get('/reset_password', function (req, res, next) {
+  auth.verifyJWT(req.query.token).then((id) => {
+    // update password hash
+    User.findById(id, function (err, user) {
+      if (err) {
+        return error(res, err)
+      }
+      user.password = helpers.hashPassword(req.query.newpwd)
+      user.save(function (err) {
+        if (err) {
+          return error(res, err)
+        }
+        res.send('Success')
+      })
+    })
+  }, (err) => {
+    error(res, err)
+  })
+})
+
 // TODO: Implement Delete API
 // May require deleting highlights to be done manually
 

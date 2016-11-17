@@ -69,7 +69,7 @@ router.post('/forgot_password', function (req, res, next) {
           from: 'support@anotode.com',
           subject: 'Password Reset Link',
           html: 'Hi<br>Your new password is ' + newPwd + '<br>Visit the following link to confirm<br><br>' +
-            'https://anotode.herokuapp.com/api/login/reset_password?token=' + jwtToken + '&newpwd=' + newPwd
+            'https://anotode.herokuapp.com/api/users/reset_password?token=' + jwtToken + '&newpwd=' + newPwd
         },
         json: true,
         headers: {
