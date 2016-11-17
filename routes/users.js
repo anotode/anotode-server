@@ -30,12 +30,22 @@ router.post('/', function (req, res, next) {
   }
   // set hash password
   user.password = helpers.hashPassword(user.password)
-  // save user
-  user.save(function (err) {
+  // find if email/username exists
+  User.find({'$or': [{'username': user.username}, {'email': user.email}]}, (err, users) => {
     if (err) {
       return error(res, err)
     }
-    res.json(user)
+    if (users.length === 0) {
+      // save user if no user exists
+      user.save(function (err) {
+        if (err) {
+          return error(res, err)
+        }
+        res.json(user)
+      })
+    } else {
+      error(res, 'User already exists with same username/email')
+    }
   })
 })
 

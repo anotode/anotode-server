@@ -79,4 +79,20 @@ describe('User API', () => {
       })
     })
   })
+  // test POST already existing user
+  describe('/POST single user fail', () => {
+    it('it should test creating duplicate user', (done) => {
+      // create first user
+      helpers.createUser(chai, server).then((res) => {
+        // create second user
+        helpers.createUser(chai, server).then((res) => {
+          done('This is wrong')
+        }, (err) => {
+          err.should.have.status(400)
+          err.body.should.have.property('error')
+          done()
+        })
+      })
+    })
+  })
 })
