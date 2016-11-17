@@ -3,7 +3,7 @@
 # pip install httpie
 
 # Create user
-http post localhost:3000/api/users email=asd password=sads -j
+http post localhost:3000/api/users email=avi.aryan123@gmail.com password=sads -j
 http post http://anotode.herokuapp.com/api/login email=asd@gmail.com password=sads -j
 
 # Login
@@ -21,3 +21,5 @@ http get http://anotode.herokuapp.com/api/highlights?token=eyJhbGciOiJIUzI1NiIsI
 
 
 http get "localhost:3000/api/highlights/categories?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1N2YxMWNlNDk1NDcxMDNkNDg5OTExYmIiLCJpYXQiOjE0Nzg3NzgwMTV9.fbmJ3BJFfAZ1Z41EzaZGFRohfBpp0KmaCaLtPpuCNRw"
+
+http post "localhost:3000/api/login/forgot_password" email=avi.aryan123@gmail.com -j
