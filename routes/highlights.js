@@ -149,7 +149,7 @@ router.get('/export', function (req, res, next) {
         error(res, err)
       }
       var filename = __dirname + '/../static/userdata_' + id + '.json' // eslint-disable-line
-      fs.writeFile(filename, JSON.stringify(hls), (err) => {
+      fs.writeFile(filename, JSON.stringify(hls, null, 2), (err) => {
         if (err) {
           error(res, err)
         }
