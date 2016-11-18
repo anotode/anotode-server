@@ -30,7 +30,7 @@ router.post('/', function (req, res, next) {
   }
   // validate email and other things
   if (user.email === '' || (!helpers.validateEmail(user.email))) {
-    return error(res, 'Invalid email or password')
+    return error(res, 'Invalid email')
   }
   if (user.password.length < 6) {
     return error(res, 'Password too short. Should be min 6 characters')
