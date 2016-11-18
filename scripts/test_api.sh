@@ -3,11 +3,11 @@
 # pip install httpie
 
 # Create user
-http post localhost:3000/api/users email=avi.aryan123@gmail.com password=sads -j
-http post http://anotode.herokuapp.com/api/login email=asd@gmail.com password=sads -j
-http post localhost:3000/api/login email=avi.aryan123@gmail.com password=kkd35 -j
+http post http://anotode.herokuapp.com/api/users email=avi.aryan123@gmail.com password=test username=aviaryan -j
+http post localhost:3000/api/users email=asd password=sads -j
 
 # Login
+http post localhost:3000/api/login email=avi.aryan123@gmail.com password=test -j
 http post localhost:3000/api/login email=asd password=sads -j
 
 # Get higlight

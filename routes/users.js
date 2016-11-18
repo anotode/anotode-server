@@ -28,6 +28,10 @@ router.post('/', function (req, res, next) {
   if (!req.body.username) {
     user.username = user.email
   }
+  // validate email and other things
+  if (user.email === '' || user.password === '' || (!helpers.validateEmail(user.email))) {
+    return error(res, 'Invalid email or password')
+  }
   // set hash password
   user.password = helpers.hashPassword(user.password)
   // find if email/username exists
