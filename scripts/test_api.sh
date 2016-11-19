@@ -4,7 +4,7 @@
 
 # Create user
 http post http://anotode.herokuapp.com/api/users email=avi.aryan123@gmail.com password=test username=aviaryan -j
-http post localhost:3000/api/users email=asd password=sads -j
+http post localhost:3000/api/users email=asd@vc.com password=sads username="asads" -j
 
 # Login
 http post localhost:3000/api/login email=avi.aryan123@gmail.com password=test -j

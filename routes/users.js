@@ -28,6 +28,10 @@ router.post('/', function (req, res, next) {
   if (!req.body.username) {
     user.username = user.email
   }
+  // validate username
+  if (!helpers.validateUsername(user.username)) {
+    return error(res, 'Invalid username. Should not contain whitespace')
+  }
   // validate email and other things
   if (user.email === '' || (!helpers.validateEmail(user.email))) {
     return error(res, 'Invalid email')
