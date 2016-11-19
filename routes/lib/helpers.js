@@ -3,6 +3,7 @@
  * That's all
  */
 var crypto = require('crypto')
+var jwt = require('jsonwebtoken')
 
 /*
  * Hash password
@@ -35,4 +36,18 @@ exports.validateEmail = function (email) {
 exports.validateUsername = function (username) {
   var re = /^[\S]+$/
   return re.test(username)
+}
+
+/*
+ * Make JWT
+ */
+exports.makeJwtToken = (obj) => {
+  return new Promise((resolve, reject) => {
+    jwt.sign(obj, 'SECRET', {}, (err, jwtToken) => {
+      if (err) {
+        return reject(err)
+      }
+      return resolve(jwtToken)
+    })
+  })
 }

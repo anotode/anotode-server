@@ -1,6 +1,5 @@
 var express = require('express')
 var router = express.Router()
-var jwt = require('jsonwebtoken')
 var got = require('got')
 var helpers = require('./lib/helpers.js')
 var error = helpers.makeError
@@ -11,14 +10,7 @@ var User = require('../models/User.js')
  * Make User JWT
  */
 function makeUserJWT (user) {
-  return new Promise((resolve, reject) => {
-    jwt.sign({ _id: user._id }, 'SECRET', {}, (err, jwtToken) => {
-      if (err) {
-        return reject(err)
-      }
-      return resolve(jwtToken)
-    })
-  })
+  return helpers.makeJwtToken({ _id: user._id })
 }
 
 /*

@@ -61,6 +61,13 @@ router.post('/', function (req, res, next) {
 })
 
 /*
+ * Create Account from mail verify link
+ */
+router.get('/create_account', function (req, res, next) {
+  // var user = new User(req.)
+})
+
+/*
  * GET single user
  */
 router.get('/user', function (req, res, next) {
