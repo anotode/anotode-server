@@ -4,6 +4,7 @@
  */
 var crypto = require('crypto')
 var jwt = require('jsonwebtoken')
+var got = require('got')
 
 /*
  * Hash password
@@ -48,6 +49,47 @@ exports.makeJwtToken = (obj) => {
         return reject(err)
       }
       return resolve(jwtToken)
+    })
+  })
+}
+
+/*
+ * Decode JWT
+ */
+exports.breakJwtToken = function (token) {
+  return new Promise(function (resolve, reject) {
+    if (!token) {
+      return reject('Not a valid url')
+    }
+    jwt.verify(token, 'SECRET', {}, (err, decoded) => {
+      if (err) {
+        return reject(err)
+      }
+      return resolve(decoded)
+    })
+  })
+}
+
+/*
+ * Send Email
+ */
+exports.sendEmail = function (obj) {
+  return new Promise(function (resolve, reject) {
+    got.post('https://api.sendgrid.com/api/mail.send.json', {
+      body: {
+        to: obj.email,
+        from: 'support@anotode.com',
+        subject: obj.subject,
+        html: obj.html
+      },
+      json: true,
+      headers: {
+        'Authorization': 'Bearer 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'
+      }
+    }).then((response) => {
+      resolve(response.body)
+    }).catch((err) => {
+      reject(err.response.body)
     })
   })
 }

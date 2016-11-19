@@ -1,6 +1,5 @@
 var express = require('express')
 var router = express.Router()
-var got = require('got')
 var helpers = require('./lib/helpers.js')
 var error = helpers.makeError
 
@@ -55,22 +54,15 @@ router.post('/forgot_password', function (req, res, next) {
       var newPwd = Math.random().toString(36).substring(2, 7)
       console.log(newPwd)
       // send email
-      got.post('https://api.sendgrid.com/api/mail.send.json', {
-        body: {
-          to: req.body.email,
-          from: 'support@anotode.com',
-          subject: 'Password Reset Link',
-          html: 'Hi<br>Your new password is ' + newPwd + '<br>Visit the following link to confirm<br><br>' +
-            'https://anotode.herokuapp.com/api/users/reset_password?token=' + jwtToken + '&newpwd=' + newPwd
-        },
-        json: true,
-        headers: {
-          'Authorization': 'Bearer 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'
-        }
+      helpers.sendEmail({
+        email: req.body.email,
+        subject: 'Password Reset Link',
+        html: 'Hi<br>Your new password is ' + newPwd + '<br>Visit the following link to confirm<br><br>' +
+          'https://anotode.herokuapp.com/api/users/reset_password?token=' + jwtToken + '&newpwd=' + newPwd
       }).then((response) => {
-        res.json(response.body)
-      }).catch((err) => {
-        error(res, err.response.body)
+        res.json(response)
+      }, (err) => {
+        error(res, err)
       })
       // done sending email
     }, (err) => {
