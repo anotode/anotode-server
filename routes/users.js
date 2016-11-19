@@ -47,13 +47,36 @@ router.post('/', function (req, res, next) {
       return error(res, err)
     }
     if (users.length === 0) {
-      // save user if no user exists
-      user.save(function (err) {
-        if (err) {
+      // create user acount simply
+      if (req.query.noemail) {
+        user.save(function (err) {
+          if (err) {
+            return error(res, err)
+          }
+          res.json(user)
+        })
+        return
+      }
+      // send user account creation email
+      helpers.makeJwtToken({
+        username: user.username,
+        email: user.email,
+        password: user.password
+      }).then((jwtToken) => {
+        helpers.sendEmail({
+          email: user.email,
+          subject: 'Anotode account creation',
+          html: 'Visit the following link to create your account<br><br>' +
+            'http://anotode.herokuapp.com/api/users/create_account?token=' + jwtToken
+        }).then((response) => {
+          res.json({'message': 'Email sent to create account. Please check your inbox'})
+        }, (err) => {
           return error(res, err)
-        }
-        res.json(user)
+        })
+      }, (err) => {
+        return error(res, err)
       })
+      // end good user create
     } else {
       error(res, 'User already exists with same username/email')
     }
@@ -64,7 +87,17 @@ router.post('/', function (req, res, next) {
  * Create Account from mail verify link
  */
 router.get('/create_account', function (req, res, next) {
-  // var user = new User(req.)
+  helpers.breakJwtToken(req.query.token).then((obj) => {
+    var user = new User(obj)
+    user.save((err) => {
+      if (err) {
+        return error(res, err)
+      }
+      res.send('Success. Now you can login')
+    })
+  }, (err) => {
+    return error(res, err)
+  })
 })
 
 /*

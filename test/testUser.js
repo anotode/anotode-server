@@ -25,7 +25,7 @@ describe('User API', () => {
         password: 'password'
       }
       chai.request(server)
-        .post('/api/users')
+        .post('/api/users?noemail=true')
         .send(user)
         .end((er, res) => {
           res.should.have.status(200)

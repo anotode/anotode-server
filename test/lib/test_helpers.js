@@ -6,7 +6,7 @@ exports.createUser = function (chai, server) {
       password: 'password'
     }
     chai.request(server)
-      .post('/api/users')
+      .post('/api/users?noemail=true')
       .send(user)
       .end((err, res) => {
         if (err) {
