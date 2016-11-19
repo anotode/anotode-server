@@ -5,6 +5,7 @@ var path = require('path')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+var cors = require('cors')
 
 var routes = require('./routes/index')
 var users = require('./routes/users')
@@ -12,6 +13,9 @@ var login = require('./routes/login')
 var highlights = require('./routes/highlights')
 
 var app = express()
+
+// enable cors
+app.use(cors())
 
 // connect to database
 var dbUrl = process.env.DATABASE_URL

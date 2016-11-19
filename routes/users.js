@@ -88,12 +88,22 @@ router.post('/', function (req, res, next) {
  */
 router.get('/create_account', function (req, res, next) {
   helpers.breakJwtToken(req.query.token).then((obj) => {
-    var user = new User(obj)
-    user.save((err) => {
+    // find if email/username exists
+    User.find({'$or': [{'username': obj.username}, {'email': obj.email}]}, (err, users) => {
       if (err) {
         return error(res, err)
       }
-      res.send('Success. Now you can login')
+      if (users.length !== 0) {
+        return error(res, 'User already exists')
+      }
+      // user not exist
+      var user = new User(obj)
+      user.save((err) => {
+        if (err) {
+          return error(res, err)
+        }
+        res.send('Success. Now you can login')
+      })
     })
   }, (err) => {
     return error(res, err)
