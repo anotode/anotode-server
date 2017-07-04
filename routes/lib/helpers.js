@@ -84,7 +84,7 @@ exports.sendEmail = function (obj) {
       },
       json: true,
       headers: {
-        'Authorization': 'Bearer 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'
+        'Authorization': '<INSERT SG TOKEN HERE>'
       }
     }).then((response) => {
       resolve(response.body)
